@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ```
 uvicorn main:app --host 0.0.0.0 --port 80 
 ```
-5. Inside the server directory, add the MONGODB_URI in .env file.
+5. Inside the server directory, add the OPENAI_API_KEY, GEMINI_API_KEY in .env file.
 6. Run ```npm install``` to install the packages.
 7. Type ```nodemon server.js``` to run the server.
 
