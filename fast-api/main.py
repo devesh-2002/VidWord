@@ -11,10 +11,9 @@ from gtts import gTTS
 
 app = FastAPI()
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this to your frontend's origin or use a list of allowed origins
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,26 +28,22 @@ def get_transcript(youtube_url):
     video_id = youtube_url.split("v=")[-1]
     transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
 
-    # Try fetching the manual transcript
     try:
         transcript = transcript_list.find_manually_created_transcript()
-        language_code = transcript.language_code  # Save the detected language
+        language_code = transcript.language_code 
     except:
-        # If no manual transcript is found, try fetching an auto-generated transcript in a supported language
         try:
             generated_transcripts = [trans for trans in transcript_list if trans.is_generated]
             transcript = generated_transcripts[0]
-            language_code = transcript.language_code  # Save the detected language
+            language_code = transcript.language_code  
         except:
-            # If no auto-generated transcript is found, raise an exception
             print("No suitable transcript found.")
             raise Exception("No suitable transcript found.")
 
     full_transcript = " ".join([part['text'] for part in transcript.fetch()])
-    return full_transcript, language_code  # Return both the transcript and detected language
+    return full_transcript, language_code  
 
 def summarize_with_langchain_and_openai(transcript, language_code, model_name='gpt-3.5-turbo'):
-    # Split the document if it's too long
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=0)
     texts = text_splitter.split_text(transcript)
     text_to_summarize = " ".join(texts[:4]) # Adjust this as needed
