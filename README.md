@@ -1,5 +1,5 @@
 # VidWord
-A Youtube Video Summarizer, where user just has to enter a Youtube video Link and it gets summarized. Summaries are created at certain timestamps. 
+A Youtube Video Summarizer, where user just has to enter a Youtube video Link and it gets summarized. Summaries are created at certain timestamps. There is also a feature of converting the video to speech.
 One can also chat regarding the video using the Gemini Chatbot. The User History gets saved in the MongoDB database.
 
 ## Tech Stack
